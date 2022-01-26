@@ -7,7 +7,7 @@
 
 <sub>Built with ❤︎ by LegendaryB</sub>
 
-[Native Messaging](https://developer.chrome.com/docs/apps/nativeMessaging/) powered by Go.
+[Native Messaging](https://developer.chrome.com/docs/apps/nativeMessaging/) module powered by Go.
 </div><br>
 
 ## Getting started
