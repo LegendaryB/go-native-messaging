@@ -17,6 +17,10 @@ type NativeMessagingHost struct {
 }
 
 func NewNativeMessagingHost(stderr io.Writer) *NativeMessagingHost {
+	if stderr == nil {
+		stderr = os.Stderr
+	}
+
 	return &NativeMessagingHost{
 		input:  os.Stdin,
 		output: os.Stdout,
