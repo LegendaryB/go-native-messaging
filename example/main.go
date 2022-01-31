@@ -4,7 +4,7 @@ import (
 	"io"
 	"os"
 
-	nativemessaging "github.com/LegendaryB/go-native-messaging/pkg"
+	nativemessaging "github.com/LegendaryB/go-native-messaging"
 )
 
 type Test struct {
