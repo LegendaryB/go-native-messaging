@@ -10,4 +10,37 @@
 [Native Messaging](https://developer.chrome.com/docs/apps/nativeMessaging/) module powered by Go.
 </div><br>
 
-## Getting started
+## 📝 Requirements
+* Read and understand [this](https://developer.chrome.com/docs/apps/nativeMessaging/).
+
+## 🚀 How to use it?
+
+### Retrieving complex objects
+```go
+package main
+
+import (
+	"github.com/LegendaryB/go-native-messaging"
+)
+
+type Message struct {
+    Value string `json:"data"`
+}
+
+func main() {
+    host := nativemessaging.NewNativeMessagingHost(nil)
+
+    msg := &Message{}
+
+    for {
+		if err := host.Read(msg); err != nil {
+			if err == io.EOF {
+				f.Write([]byte("Received EOF error, Browser or tab was probably closed"))
+				break
+			}
+		}
+
+		host.Write("pong: " + msg.Value)
+	}
+}
+```
