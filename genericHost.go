@@ -38,7 +38,7 @@ func (host *GenericNativeMessagingHost[T]) Write(data T) error {
 	return nil
 }
 
-func (host *GenericNativeMessagingHost[T]) ReadT() (*T, error) {
+func (host *GenericNativeMessagingHost[T]) Read() (*T, error) {
 	data := host.createInstanceOf()
 
 	bytes, err := host.ReadBytes()
