@@ -28,7 +28,7 @@ func NewNativeMessagingHost(stderr io.Writer) *NativeMessagingHost {
 	}
 }
 
-func (host *NativeMessagingHost) Write(v interface{}) error {
+func (host *NativeMessagingHost) Write(v any) error {
 	if v == nil {
 		return errors.New("can't marshal nil interface")
 	}
@@ -59,6 +59,33 @@ func (host *NativeMessagingHost) WriteBytes(bytes []byte) error {
 	}
 
 	return nil
+}
+
+func (host *NativeMessagingHost) Read(v any) error {
+	bytes, err := host.ReadBytes()
+
+	if err != nil {
+		return err
+	}
+
+	if err := json.Unmarshal(bytes, v); err != nil {
+		err = fmt.Errorf("failed to unmarshal payload: %v", err)
+		host.error.Print(err)
+		return err
+	}
+
+	return nil
+}
+
+func (host *NativeMessagingHost) ReadBytes() ([]byte, error) {
+	bytes, err := host.read()
+
+	if err != nil {
+		host.error.Print(err)
+		return nil, err
+	}
+
+	return bytes, nil
 }
 
 func (host *NativeMessagingHost) write(bytes []byte) error {
@@ -104,33 +131,6 @@ func (host *NativeMessagingHost) writeSize(size int) error {
 	}
 
 	return nil
-}
-
-func (host *NativeMessagingHost) Read(v interface{}) error {
-	bytes, err := host.ReadBytes()
-
-	if err != nil {
-		return err
-	}
-
-	if err := json.Unmarshal(bytes, v); err != nil {
-		err = fmt.Errorf("failed to unmarshal payload: %v", err)
-		host.error.Print(err)
-		return err
-	}
-
-	return nil
-}
-
-func (host *NativeMessagingHost) ReadBytes() ([]byte, error) {
-	bytes, err := host.read()
-
-	if err != nil {
-		host.error.Print(err)
-		return nil, err
-	}
-
-	return bytes, nil
 }
 
 func (host *NativeMessagingHost) read() ([]byte, error) {
